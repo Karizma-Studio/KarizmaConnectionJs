@@ -1,6 +1,6 @@
 {
   "name": "@karizma-studio/karizma-connection-js",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "KarizmaConnection for both server (Node) and client (Node or browser).",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint src/**/*.ts",
-    "format": "prettier --write 'src/**/*.ts'",
+    "format": "prettier --write src/**/*.ts",
     "prepare": "npm run build",
     "test": "jest",
     "clean": "rimraf dist"
