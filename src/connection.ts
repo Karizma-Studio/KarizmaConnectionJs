@@ -1,5 +1,5 @@
-import * as signalR from "@microsoft/signalr";
-import type {EventHandler, Response} from "./types";
+import * as signalR from '@microsoft/signalr';
+import type {EventHandler, Response} from './types';
 
 interface IConnection {
     id: string | null;
@@ -46,7 +46,7 @@ export class Connection implements IConnection {
             .build();
 
         this.hubConnection.onreconnecting((error) => {
-            console.warn("Connection lost. Reconnecting...", error);
+            console.warn('Connection lost. Reconnecting...', error);
         });
 
         this.hubConnection.onreconnected((connectionId) => {
@@ -54,11 +54,11 @@ export class Connection implements IConnection {
         });
 
         this.hubConnection.onclose((error) => {
-            console.warn("Connection closed.", error);
+            console.warn('Connection closed.', error);
         });
 
 
-        this.hubConnection.on("HandleAction", (command: string, payload: any) => {
+        this.hubConnection.on('HandleAction', (command: string, payload: any) => {
             const handler = this.handlers.get(command);
             if (handler) {
                 handler(payload);
@@ -68,7 +68,7 @@ export class Connection implements IConnection {
 
         await this.hubConnection.start();
         this.lastConnectedUrl = url;
-        console.info("Karizma Connection Connected successfully.");
+        console.info('Karizma Connection Connected successfully.');
     }
 
     public async disconnect(): Promise<void> {
@@ -76,7 +76,7 @@ export class Connection implements IConnection {
 
         await this.hubConnection.stop();
         this.hubConnection = null;
-        console.info("Disconnected successfully.");
+        console.info('Disconnected successfully.');
     }
 
 
@@ -87,13 +87,13 @@ export class Connection implements IConnection {
 
     public async send(address: string, ...body: any[]): Promise<void> {
         await this.checkConnection();
-        await this.hubConnection!.invoke("HandleAction", address, body);
+        await this.hubConnection!.invoke('HandleAction', address, body);
     }
 
     public async request<TResponse>(address: string, ...body: any[]): Promise<Response<TResponse>> {
         await this.checkConnection();
         const response = await this.hubConnection!.invoke<Response<TResponse>>(
-            "HandleAction",
+            'HandleAction',
             address,
             body
         );
@@ -102,12 +102,18 @@ export class Connection implements IConnection {
 
     private async checkConnection(): Promise<void> {
         if (!this.hubConnection || !this.lastConnectedUrl) {
-            throw new Error("Connection is not initialized.");
+            throw new Error('Connection is not initialized.');
         }
 
         if (this.hubConnection.state === signalR.HubConnectionState.Disconnected) {
-            console.warn("Reconnecting to the last known URL...");
+            console.warn('Reconnecting to the last known URL...');
             await this.connect(this.lastConnectedUrl);
         }
     }
+
+    public onReconnecting(callback: (error: Error | undefined) => void): void {
+        if (!this.hubConnection) return;
+        this.hubConnection.onreconnecting(callback);
+    }
+
 }
