@@ -1,5 +1,5 @@
 {
-  "name": "karizma-connection-js",
+  "name": "@karizma-studio/karizma-connection-js",
   "version": "0.1.0",
   "description": "KarizmaConnection for both server (Node) and client (Node or browser).",
   "main": "dist/index.cjs",
@@ -49,5 +49,8 @@
   "type": "module",
   "engines": {
     "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
