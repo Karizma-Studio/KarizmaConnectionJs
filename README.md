@@ -151,13 +151,6 @@ Sends data to the server expecting a typed response.
 const response = await connection.request<UserProfile>('GetUserProfile', { userId: '123' });
 ```
 
-#### `onReconnecting(callback: (error: Error | undefined) => void): void`
-Adds a callback for when the underlying SignalR connection starts reconnecting.
-
-```ts
-connection.onReconnecting((error) => {
-  console.log('Reconnecting...', error);
-});
 ```
 
 ### Types
