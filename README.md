@@ -207,7 +207,7 @@ type EventHandler<T> = (data: T) => void;
 
 ## License
 
-[MIT](./LICENSE)
+[MIT](https://github.com/Karizma-Studio/KarizmaConnectionJs/blob/main/LICENSE)
 
 ---
 
