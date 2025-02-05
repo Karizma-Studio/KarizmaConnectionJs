@@ -1,5 +1,5 @@
 import * as signalR from '@microsoft/signalr';
-import type { EventHandler, Response } from './types';
+import type { EventHandler, Response } from './types.js';
 
 interface IConnection {
     id: string | null;

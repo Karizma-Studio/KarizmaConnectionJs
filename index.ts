@@ -1,2 +1,2 @@
-export * from './src/types';
-export * from './src/connection';
+export * from './src/types.js';
+export * from './src/connection.js';
