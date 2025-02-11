@@ -1,8 +1,8 @@
 export interface Response<T> {
-    result?: T;
-    error?: {
-        code: number;
-        message: string;
+    Result?: T;
+    Error?: {
+        Code: number;
+        Message: string;
     };
 }
 
