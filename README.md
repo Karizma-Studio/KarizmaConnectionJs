@@ -91,7 +91,7 @@ if (response.error) {
   console.error('Error code:', response.error.code);
   console.error('Error message:', response.error.message);
 } else {
-  console.log('Received user profile data:', response.data);
+  console.log('Received user profile data:', response.result);
 }
 ```
 
@@ -145,7 +145,7 @@ Sends data to the server expecting a typed response.
 
 - **address**: The method name or command recognized by the server.
 - **body**: Any data you want to send (spreads into an array).
-- **returns**: A `Response<TResponse>` object containing `.data` or `.error`.
+- **returns**: A `Response<TResponse>` object containing `.result` or `.error`.
 
 ```ts
 const response = await connection.request<UserProfile>('GetUserProfile', { userId: '123' });
