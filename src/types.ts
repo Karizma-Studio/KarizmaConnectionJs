@@ -1,5 +1,5 @@
 export interface Response<T> {
-    data?: T;
+    result?: T;
     error?: {
         code: number;
         message: string;
