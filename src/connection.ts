@@ -13,7 +13,7 @@ interface IConnection {
 
     send(address: string, ...body: any[]): Promise<void>;
 
-    request<TResponse>(
+    request<TResponse = any>(
         address: string,
         ...body: any[]
     ): Promise<Response<TResponse>>;
@@ -92,7 +92,7 @@ export class Connection implements IConnection {
         await this.hubConnection!.invoke('HandleAction', address, body);
     }
 
-    public async request<TResponse>(
+    public async request<TResponse = any>(
         address: string,
         ...body: any[]
     ): Promise<Response<TResponse>> {
