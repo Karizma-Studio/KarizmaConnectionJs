@@ -1,6 +1,6 @@
 {
   "name": "@karizma-studio/karizma-connection-js",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "KarizmaConnection for both server (Node) and client (Node or browser).",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

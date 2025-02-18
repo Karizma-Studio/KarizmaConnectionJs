@@ -86,12 +86,15 @@ export class Connection implements IConnection {
     }
 
     public on<T>(command: string, handler: EventHandler<T>): void {
+        console.info(`Registering handler for command "${command}".`);
         this.hubConnection?.on(command, (payload: T) => {
+            console.info(`Received command "${command}".`);
             handler(payload);
         });
     }
 
     public off(command: string): void {
+        console.info(`Removing handler for command "${command}".`);
         this.hubConnection?.off(command);
     }
 
