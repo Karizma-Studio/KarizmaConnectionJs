@@ -86,11 +86,13 @@ export class Connection implements IConnection {
     }
 
     public on<T>(command: string, handler: EventHandler<T>): void {
-        this.handlers.set(command, handler);
+        this.hubConnection?.on(command, (payload: T) => {
+            handler(payload);
+        });
     }
 
     public off(command: string): void {
-        this.handlers.delete(command);
+        this.hubConnection?.off(command);
     }
 
     public async send(address: string, ...body: any[]): Promise<void> {
@@ -103,12 +105,11 @@ export class Connection implements IConnection {
         ...body: any[]
     ): Promise<Response<TResponse>> {
         await this.checkConnection();
-        const response = await this.hubConnection!.invoke<Response<TResponse>>(
+        return await this.hubConnection!.invoke<Response<TResponse>>(
             'HandleAction',
             address,
             body,
         );
-        return response;
     }
 
     private async checkConnection(): Promise<void> {
