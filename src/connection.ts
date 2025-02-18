@@ -11,6 +11,8 @@ interface IConnection {
 
     on<T>(command: string, handler: EventHandler<T>): void;
 
+    off(command: string): void;
+
     send(address: string, ...body: any[]): Promise<void>;
 
     request<TResponse>(
