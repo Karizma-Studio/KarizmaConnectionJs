@@ -87,6 +87,10 @@ export class Connection implements IConnection {
         this.handlers.set(command, handler);
     }
 
+    public off(command: string): void {
+        this.handlers.delete(command);
+    }
+
     public async send(address: string, ...body: any[]): Promise<void> {
         await this.checkConnection();
         await this.hubConnection!.invoke('HandleAction', address, body);
