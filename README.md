@@ -151,7 +151,6 @@ Sends data to the server expecting a typed response.
 const response = await connection.request<UserProfile>('GetUserProfile', { userId: '123' });
 ```
 
-```
 
 ### Types
 
@@ -160,11 +159,11 @@ The default interface for responses:
 
 ```ts
 interface Response<T> {
-  data?: T;
-  error?: {
-    code: number;
-    message: string;
-  };
+    Result?: T;
+    Error?: {
+        Code: number;
+        Message: string;
+    };
 }
 ```
 
