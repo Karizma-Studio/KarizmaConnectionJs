@@ -12,6 +12,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
     "lib": ["ES6", "DOM"]
   },
   "include": ["src", "index.ts"],
