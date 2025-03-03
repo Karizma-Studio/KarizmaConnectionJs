@@ -5,7 +5,7 @@ interface IConnection {
     id: string | null;
     isConnected: boolean;
 
-    connect(url: string): Promise<void>;
+    connect(url: string, autoReconnect: boolean): Promise<void>;
 
     disconnect(): Promise<void>;
 
@@ -19,6 +19,12 @@ interface IConnection {
         address: string,
         ...body: any[]
     ): Promise<Response<TResponse>>;
+
+    onReconnecting(callback: (error: Error | undefined) => void): void;
+
+    onConnected(callback: (connectionId?: string) => void): void;
+
+    onClosed(callback: (error?: Error) => void): void;
 }
 
 export class Connection implements IConnection {
@@ -26,7 +32,8 @@ export class Connection implements IConnection {
     private lastConnectedUrl: string | null = null;
     private handlers: Map<string, EventHandler<any>> = new Map();
 
-    constructor() {}
+    constructor() {
+    }
 
     public get id(): string | null {
         return this.hubConnection?.connectionId || null;
@@ -38,17 +45,20 @@ export class Connection implements IConnection {
         );
     }
 
-    public async connect(url: string): Promise<void> {
+    public async connect(url: string, autoReconnect: boolean = false): Promise<void> {
         if (this.hubConnection) {
             await this.hubConnection.stop();
         }
 
         console.info(`Connecting to: ${url}`);
 
-        this.hubConnection = new signalR.HubConnectionBuilder()
-            .withUrl(url)
-            .withAutomaticReconnect()
-            .build();
+        const builder = new signalR.HubConnectionBuilder().withUrl(url);
+
+        if (autoReconnect) {
+            builder.withAutomaticReconnect();
+        }
+
+        this.hubConnection = builder.build();
 
         this.hubConnection.onreconnecting((error) => {
             console.warn('Connection lost. Reconnecting...', error);
@@ -132,4 +142,15 @@ export class Connection implements IConnection {
         if (!this.hubConnection) return;
         this.hubConnection.onreconnecting(callback);
     }
+
+    public onConnected(callback: (connectionId?: string) => void): void {
+        if (!this.hubConnection) return;
+        this.hubConnection.onreconnected(callback);
+    }
+
+    public onClosed(callback: (error?: Error) => void): void {
+        if (!this.hubConnection) return;
+        this.hubConnection.onclose(callback);
+    }
+
 }
